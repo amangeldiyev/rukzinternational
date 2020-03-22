@@ -12,20 +12,20 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
 
 		<!-- Bootstrap -->
-		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+		<link type="text/css" rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}"/>
 
 		<!-- Slick -->
-		<link type="text/css" rel="stylesheet" href="css/slick.css"/>
-		<link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
+		<link type="text/css" rel="stylesheet" href="{{ asset('css/slick.css') }}"/>
+		<link type="text/css" rel="stylesheet" href="{{ asset('css/slick-theme.css') }}"/>
 
 		<!-- nouislider -->
-		<link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
+		<link type="text/css" rel="stylesheet" href="{{ asset('css/nouislider.min.css') }}"/>
 
 		<!-- Font Awesome Icon -->
-		<link rel="stylesheet" href="css/font-awesome.min.css">
+		<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
 		<!-- Custom stlylesheet -->
-		<link type="text/css" rel="stylesheet" href="css/style.css"/>
+		<link type="text/css" rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,9 +42,9 @@
 			<div id="top-header">
 				<div class="container">
 					<ul class="header-links pull-left">
-						<li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-						<li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-						<li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+						<li><a href="#"><i class="fa fa-phone"></i> {{setting('site.phone') ?? '+021-95-51-84'}}</a></li>
+						<li><a href="#"><i class="fa fa-envelope-o"></i> {{setting('site.email') ?? 'email@email.com'}}</a></li>
+						<li><a href="#"><i class="fa fa-map-marker"></i> {{setting('site.address') ?? '1734 Stonecoal Road'}}</a></li>
 					</ul>
 					<ul class="header-links pull-right">
 						<li><a href="#"><i class="fa fa-home"></i> Главная</a></li>
@@ -78,8 +78,9 @@
 								<form>
 									<select class="input-select">
 										<option value="0">Все</option>
-										<option value="1">Category 01</option>
-										<option value="1">Category 02</option>
+										@foreach ($categories = \App\Category::all() as $category)
+											<option value="{{$category->id}}">{{$category->name}}</option>
+										@endforeach
 									</select>
 									<input class="input" placeholder="Искать">
 									<button class="search-btn">Поиск</button>
@@ -104,11 +105,11 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="#">Главная</a></li>
-						<li><a href="#">Ноутбуки</a></li>
-						<li><a href="#">Смартфоны</a></li>
-						<li><a href="#">Камеры</a></li>
-						<li><a href="#">Аксессуары</a></li>
+						<li class="{{request()->route()->getName() =='main' ? active : ''}}"><a href="/">Главная</a></li>
+
+						@foreach ($categories as $category)
+							<li><a href="{{ route('category', ['category' => $category]) }}">{{$category->name}}</a></li>
+						@endforeach
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -214,12 +215,12 @@
 		<!-- /FOOTER -->
 
 		<!-- jQuery Plugins -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/slick.min.js"></script>
-		<script src="js/nouislider.min.js"></script>
-		<script src="js/jquery.zoom.min.js"></script>
-		<script src="js/main.js"></script>
+		<script src="{{ asset('js/jquery.min.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('js/slick.min.js') }}"></script>
+		<script src="{{ asset('js/nouislider.min.js') }}"></script>
+		<script src="{{ asset('js/jquery.zoom.min.js') }}"></script>
+		<script src="{{ asset('js/main.js') }}"></script>
 
 	</body>
 </html>
